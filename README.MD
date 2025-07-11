@@ -222,4 +222,3 @@ The custom Apriori algorithm is designed for this small dataset (10 transactions
 If no rules meet the 70% confidence threshold, the script will indicate this in the output.
 The random seed (np.random.seed(42)) ensures consistent results for demonstration, but you can remove it for varied transaction data.
 
-
