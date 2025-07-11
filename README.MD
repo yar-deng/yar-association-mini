@@ -1,19 +1,28 @@
 Association Rule Mining Mini-Project
+
 Overview
 This project simulates transactional data and applies a custom Apriori algorithm to uncover shopping patterns using association rule mining. The script generates 10 fake transactions, converts them to a one-hot encoded format, finds frequent itemsets with a minimum support of 30%, and generates association rules with a minimum confidence of 70%. This README provides a step-by-step explanation of the code, example outputs, and an interpretation of the generated rules.
+
+
 Requirements
 
 Python 3.x
 Libraries: pandas, numpy
 
 Installation
+
 Install the required libraries using:
 pip install pandas numpy
 
+
 Step-by-Step Procedure
+
 Below is a detailed explanation of each step in the association_analysis.py script, including code snippets, their outputs, and what they accomplish.
+
 Step 1: Simulate Transaction Data
+
 The script generates 10 fake transactions, each containing 2–5 items from a pool of 8 unique items: Bread, Milk, Eggs, Butter, Cheese, Yogurt, Apples, and Bananas. A random seed ensures reproducibility.
+
 Code Snippet:
 import pandas as pd
 import numpy as np
@@ -48,8 +57,11 @@ The script creates 10 transactions (T1 to T10), each with a random selection of 
 The output shows each transaction and its items, simulating a grocery store purchase history.
 This data is used for further analysis to find patterns in item purchases.
 
+
 Step 2: One-Hot Encoding
+
 The transaction data is converted into a one-hot encoded format, where each item is a column, and each transaction is a row. A value of 1 indicates the item is present in the transaction, and 0 indicates it is not.
+
 Code Snippet:
 def encode_transactions(transactions, items):
     encoded_vals = []
@@ -83,8 +95,11 @@ Each row represents a transaction, and each column represents an item.
 A 1 means the item was purchased in that transaction, and a 0 means it was not.
 This format is necessary for the Apriori algorithm to calculate itemset frequencies.
 
+
 Step 3: Find Frequent Itemsets (Custom Apriori Algorithm)
+
 A custom Apriori algorithm identifies itemsets (combinations of items) that appear in at least 30% of transactions (min_support=0.3). It starts with single items and iteratively combines them to find larger frequent itemsets.
+
 Code Snippet:
 def get_frequent_itemsets(df, min_support=0.3):
     n_transactions = len(df)
@@ -137,8 +152,10 @@ The output lists itemsets that appear in at least 3 out of 10 transactions (supp
 For example, {Butter} has a support of 0.5, meaning it appears in 50% of transactions.
 Pairs like {Butter, Cheese} have a support of 0.3, meaning they are purchased together in 30% of transactions.
 
+
 Step 4: Generate Association Rules
 The script generates association rules from frequent itemsets, filtering for rules with a confidence of at least 70% (min_confidence=0.7). Confidence measures the likelihood that the consequent is purchased when the antecedent is purchased.
+
 Code Snippet:
 def generate_association_rules(frequent_itemsets, df, min_confidence=0.7):
     rules = []
@@ -183,8 +200,11 @@ The output shows rules where the confidence is at least 0.7 (70%).
 For example, {Butter} -> {Cheese} has a support of 0.3 (appears in 30% of transactions) and a confidence of 0.75, meaning 75% of transactions with Butter also include Cheese.
 Only the first two rules are shown, as per the assignment requirement.
 
+
 Step 5: Explain One Rule
+
 The script selects the first rule and explains it in everyday language.
+
 Code Snippet:
 if not rules.empty:
     first_rule = rules.iloc[0]
@@ -198,7 +218,9 @@ if not rules.empty:
 else:
     print("\nNo association rules found with the specified confidence threshold.")
 
+
 Example Output:
+
 Explanation of Rule: Butter -> Cheese
 This rule means that when Butter is purchased, there is a 75.0% chance that Cheese will also be purchased. In everyday terms, if a customer buys Butter, they are highly likely to buy Cheese as well, suggesting a strong shopping pattern, possibly because these items are often used together (e.g., in a recipe).
 
